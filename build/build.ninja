@@ -11,7 +11,7 @@
 # =============================================================================
 
 # =============================================================================
-# Project: Project
+# Project: Path_planning
 # Configurations: Debug
 # =============================================================================
 
@@ -40,6 +40,39 @@ include CMakeFiles/rules.ninja
 # Logical path to working directory; prefix for absolute paths.
 
 cmake_ninja_workdir = /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/
+# =============================================================================
+# Object build statements for EXECUTABLE target DstarLite_exec
+
+
+#############################################
+# Order-only phony target for DstarLite_exec
+
+build cmake_object_order_depends_target_DstarLite_exec: phony || cmake_object_order_depends_target_Path_planning_lib
+
+build CMakeFiles/DstarLite_exec.dir/src/DstarLite_main.cpp.o: CXX_COMPILER__DstarLite_exec_Debug /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/src/DstarLite_main.cpp || cmake_object_order_depends_target_DstarLite_exec
+  DEP_FILE = CMakeFiles/DstarLite_exec.dir/src/DstarLite_main.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3
+  OBJECT_DIR = CMakeFiles/DstarLite_exec.dir
+  OBJECT_FILE_DIR = CMakeFiles/DstarLite_exec.dir/src
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target DstarLite_exec
+
+
+#############################################
+# Link the executable DstarLite_exec
+
+build DstarLite_exec: CXX_EXECUTABLE_LINKER__DstarLite_exec_Debug CMakeFiles/DstarLite_exec.dir/src/DstarLite_main.cpp.o | lib/libPath_planning_lib.a /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.5.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.5.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.5.1 || lib/libPath_planning_lib.a
+  FLAGS = -g
+  LINK_LIBRARIES = lib/libPath_planning_lib.a  -lSLAM_lib  /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.5.1  /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.5.1  /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.5.1
+  OBJECT_DIR = CMakeFiles/DstarLite_exec.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = DstarLite_exec
+  TARGET_PDB = DstarLite_exec.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -64,7 +97,148 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target Path_planning_lib
+
+
+#############################################
+# Order-only phony target for Path_planning_lib
+
+build cmake_object_order_depends_target_Path_planning_lib: phony || lib/CMakeFiles/Path_planning_lib.dir
+
+build lib/CMakeFiles/Path_planning_lib.dir/Node.cpp.o: CXX_COMPILER__Path_planning_lib_Debug /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/lib/Node.cpp || cmake_object_order_depends_target_Path_planning_lib
+  DEP_FILE = lib/CMakeFiles/Path_planning_lib.dir/Node.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3
+  OBJECT_DIR = lib/CMakeFiles/Path_planning_lib.dir
+  OBJECT_FILE_DIR = lib/CMakeFiles/Path_planning_lib.dir
+
+build lib/CMakeFiles/Path_planning_lib.dir/DstarLite.cpp.o: CXX_COMPILER__Path_planning_lib_Debug /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/lib/DstarLite.cpp || cmake_object_order_depends_target_Path_planning_lib
+  DEP_FILE = lib/CMakeFiles/Path_planning_lib.dir/DstarLite.cpp.o.d
+  FLAGS = -g
+  INCLUDES = -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3
+  OBJECT_DIR = lib/CMakeFiles/Path_planning_lib.dir
+  OBJECT_FILE_DIR = lib/CMakeFiles/Path_planning_lib.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target Path_planning_lib
+
+
+#############################################
+# Link the static library lib/libPath_planning_lib.a
+
+build lib/libPath_planning_lib.a: CXX_STATIC_LIBRARY_LINKER__Path_planning_lib_Debug lib/CMakeFiles/Path_planning_lib.dir/Node.cpp.o lib/CMakeFiles/Path_planning_lib.dir/DstarLite.cpp.o
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = lib/CMakeFiles/Path_planning_lib.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = lib/libPath_planning_lib.a
+  TARGET_PDB = Path_planning_lib.a.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build lib/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/lib && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build lib/edit_cache: phony lib/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build lib/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/lib && /usr/bin/cmake --regenerate-during-build -S/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning -B/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build lib/rebuild_cache: phony lib/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target PathPlannerTests
+
+
+#############################################
+# Order-only phony target for PathPlannerTests
+
+build cmake_object_order_depends_target_PathPlannerTests: phony || cmake_object_order_depends_target_Path_planning_lib
+
+build tests/CMakeFiles/PathPlannerTests.dir/test_node_behaviour.cpp.o: CXX_COMPILER__PathPlannerTests_Debug /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/tests/test_node_behaviour.cpp || cmake_object_order_depends_target_PathPlannerTests
+  DEP_FILE = tests/CMakeFiles/PathPlannerTests.dir/test_node_behaviour.cpp.o.d
+  FLAGS = -g -DGTEST_HAS_PTHREAD=1
+  INCLUDES = -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3
+  OBJECT_DIR = tests/CMakeFiles/PathPlannerTests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/PathPlannerTests.dir
+
+build tests/CMakeFiles/PathPlannerTests.dir/test_Dstarlite_functions.cpp.o: CXX_COMPILER__PathPlannerTests_Debug /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/tests/test_Dstarlite_functions.cpp || cmake_object_order_depends_target_PathPlannerTests
+  DEP_FILE = tests/CMakeFiles/PathPlannerTests.dir/test_Dstarlite_functions.cpp.o.d
+  FLAGS = -g -DGTEST_HAS_PTHREAD=1
+  INCLUDES = -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3
+  OBJECT_DIR = tests/CMakeFiles/PathPlannerTests.dir
+  OBJECT_FILE_DIR = tests/CMakeFiles/PathPlannerTests.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target PathPlannerTests
+
+
+#############################################
+# Link the executable tests/PathPlannerTests
+
+build tests/PathPlannerTests: CXX_EXECUTABLE_LINKER__PathPlannerTests_Debug tests/CMakeFiles/PathPlannerTests.dir/test_node_behaviour.cpp.o tests/CMakeFiles/PathPlannerTests.dir/test_Dstarlite_functions.cpp.o | lib/libPath_planning_lib.a /usr/lib/x86_64-linux-gnu/libgtest_main.a /usr/lib/x86_64-linux-gnu/libgtest.a || lib/libPath_planning_lib.a
+  FLAGS = -g
+  LINK_LIBRARIES = lib/libPath_planning_lib.a  /usr/lib/x86_64-linux-gnu/libgtest_main.a  -lSLAM_lib  /usr/lib/x86_64-linux-gnu/libgtest.a
+  OBJECT_DIR = tests/CMakeFiles/PathPlannerTests.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = tests/PathPlannerTests
+  TARGET_PDB = PathPlannerTests.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build tests/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/tests && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build tests/edit_cache: phony tests/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build tests/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/tests && /usr/bin/cmake --regenerate-during-build -S/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning -B/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build tests/rebuild_cache: phony tests/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
+
+build PathPlannerTests: phony tests/PathPlannerTests
+
+build Path_planning_lib: phony lib/libPath_planning_lib.a
+
+build libPath_planning_lib.a: phony lib/libPath_planning_lib.a
 
 # =============================================================================
 # Folder targets.
@@ -74,12 +248,21 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build
 
-build all: phony
+build all: phony DstarLite_exec lib/all tests/all
 
 # =============================================================================
-# Unknown Build Time Dependencies.
-# Tell Ninja that they may appear as side effects of build rules
-# otherwise ordered by order-only dependencies.
+
+#############################################
+# Folder: /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/lib
+
+build lib/all: phony lib/libPath_planning_lib.a
+
+# =============================================================================
+
+#############################################
+# Folder: /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/tests
+
+build tests/all: phony tests/PathPlannerTests
 
 # =============================================================================
 # Built-in targets
@@ -88,14 +271,14 @@ build all: phony
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/CMakeLists.txt /usr/share/cmake-3.22/Modules/CMakeCInformation.cmake /usr/share/cmake-3.22/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.22/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.22/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.22/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.22/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.22/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.22/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.22/Modules/Platform/Linux.cmake /usr/share/cmake-3.22/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.22.1/CMakeCCompiler.cmake CMakeFiles/3.22.1/CMakeCXXCompiler.cmake CMakeFiles/3.22.1/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/CMakeLists.txt /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/lib/CMakeLists.txt /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/tests/CMakeLists.txt /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestTargets-none.cmake /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestTargets.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfigDependencies.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLSharedTargets-none.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLSharedTargets.cmake /usr/share/cmake-3.22/Modules/CMakeCInformation.cmake /usr/share/cmake-3.22/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.22/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake-3.22/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.22/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.22/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.22/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.22/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.22/Modules/CheckCSourceCompiles.cmake /usr/share/cmake-3.22/Modules/CheckIncludeFile.cmake /usr/share/cmake-3.22/Modules/CheckLibraryExists.cmake /usr/share/cmake-3.22/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU.cmake /usr/share/cmake-3.22/Modules/FindGTest.cmake /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.22/Modules/FindPackageMessage.cmake /usr/share/cmake-3.22/Modules/FindThreads.cmake /usr/share/cmake-3.22/Modules/GoogleTest.cmake /usr/share/cmake-3.22/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.22/Modules/Platform/Linux.cmake /usr/share/cmake-3.22/Modules/Platform/UnixPaths.cmake /usr/share/eigen3/cmake/Eigen3Config.cmake /usr/share/eigen3/cmake/Eigen3ConfigVersion.cmake /usr/share/eigen3/cmake/Eigen3Targets.cmake CMakeCache.txt CMakeFiles/3.22.1/CMakeCCompiler.cmake CMakeFiles/3.22.1/CMakeCXXCompiler.cmake CMakeFiles/3.22.1/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/CMakeLists.txt /usr/share/cmake-3.22/Modules/CMakeCInformation.cmake /usr/share/cmake-3.22/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.22/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.22/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.22/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.22/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.22/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.22/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.22/Modules/Platform/Linux.cmake /usr/share/cmake-3.22/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.22.1/CMakeCCompiler.cmake CMakeFiles/3.22.1/CMakeCXXCompiler.cmake CMakeFiles/3.22.1/CMakeSystem.cmake: phony
+build /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/CMakeLists.txt /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/lib/CMakeLists.txt /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/tests/CMakeLists.txt /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestTargets-none.cmake /usr/lib/x86_64-linux-gnu/cmake/GTest/GTestTargets.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfig.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfigDependencies.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLConfigVersion.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLSharedTargets-none.cmake /usr/lib/x86_64-linux-gnu/cmake/SFML/SFMLSharedTargets.cmake /usr/share/cmake-3.22/Modules/CMakeCInformation.cmake /usr/share/cmake-3.22/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.22/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.22/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake-3.22/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.22/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.22/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.22/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.22/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.22/Modules/CheckCSourceCompiles.cmake /usr/share/cmake-3.22/Modules/CheckIncludeFile.cmake /usr/share/cmake-3.22/Modules/CheckLibraryExists.cmake /usr/share/cmake-3.22/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.22/Modules/Compiler/GNU.cmake /usr/share/cmake-3.22/Modules/FindGTest.cmake /usr/share/cmake-3.22/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.22/Modules/FindPackageMessage.cmake /usr/share/cmake-3.22/Modules/FindThreads.cmake /usr/share/cmake-3.22/Modules/GoogleTest.cmake /usr/share/cmake-3.22/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.22/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.22/Modules/Platform/Linux.cmake /usr/share/cmake-3.22/Modules/Platform/UnixPaths.cmake /usr/share/eigen3/cmake/Eigen3Config.cmake /usr/share/eigen3/cmake/Eigen3ConfigVersion.cmake /usr/share/eigen3/cmake/Eigen3Targets.cmake CMakeCache.txt CMakeFiles/3.22.1/CMakeCCompiler.cmake CMakeFiles/3.22.1/CMakeCXXCompiler.cmake CMakeFiles/3.22.1/CMakeSystem.cmake: phony
 
 
 #############################################

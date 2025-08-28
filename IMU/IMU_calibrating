@@ -1,0 +1,145 @@
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas 
+from scipy.optimize import least_squares
+
+def get_gyro_data():
+    gyro_measurments= [[], [], []] # x,y,z values
+    with open("/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/IMU/Sensor_logs_without_disturbances.txt", "r") as file:
+        for line in file:
+            split = line.strip().split(",")
+            #print(split)
+            if len(split) < 6 or not split[3].replace('.', '', 1).replace('-', '', 1).isdigit():
+                continue  # skip invalid lines (e.g., header)
+            gyro_measurments[0].append(float(split[3]))
+            gyro_measurments[1].append(float(split[4]))
+            gyro_measurments[2].append(float(split[5]))
+            
+    
+    return gyro_measurments
+
+def gyroscope_bias_calibration():
+    raw_gyro_data = get_gyro_data()    
+    raw_gyro_array = np.array(raw_gyro_data)  # shape: (3, N)
+    gyro_bias = np.mean(raw_gyro_array, axis=1)  # mean for each axis
+    print("Gyroscope bias (x, y, z):", gyro_bias)
+    return gyro_bias
+            
+def gyroscope_scale_factor_calibration():
+    raw_gyro_data = get_gyro_data()    
+    #rotate the sensor 90 degrees or 360 degrees in four seconds
+    # integrate the gyro readings over time
+    # compare with true angle
+    # compute scale factor= true/measured
+    return 
+
+def gyroscope_drift_and_noise_calibration():
+    raw_gyro_data = get_gyro_data()    
+    #Allan Variance analysis (quantifies noise, bias instability, etc.)
+
+    #Collect long-term stationary gyro data
+    #Use pyallan or allan_variance packages to extract:
+        #White noise level
+        #Bias instability
+        #Random walk parameters
+    return 
+
+
+def plot_gyro_data():
+    raw_gyro_data = get_gyro_data()
+    gyro_bias = gyroscope_bias_calibration()
+    corrected_data = [[val - gyro_bias[0] for val in raw_gyro_data[0]],
+                      [val - gyro_bias[1] for val in raw_gyro_data[1]],
+                      [val - gyro_bias[2] for val in raw_gyro_data[2]]]
+    plt.figure(figsize=(10, 5))
+    labels = ['X', 'Y', 'Z']
+    for i in range(3):
+        plt.plot(corrected_data[i], label=f'Gyro corrected {labels[i]}')
+        plt.plot(raw_gyro_data[i], label=f'Gyro raw {labels[i]}')
+        
+    plt.legend()
+    plt.title("Gyroscope Raw Measurements")
+    plt.xlabel("Sample")
+    plt.ylabel("Angular Velocity (dps)")
+    plt.grid(True)
+    plt.show()
+            
+
+def gyroscope_data_plotting_and_correcting():
+    plot_gyro_data()
+    
+    
+    
+def get_accel_data():
+    accel_measurments= [] # x,y,z values
+    with open("/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/IMU/Sensor_logs_without_disturbances.txt", "r") as file:
+        for line in file:
+            split = line.strip().split(",")
+            #print(split)
+            if len(split) < 6 or not split[3].replace('.', '', 1).replace('-', '', 1).isdigit():
+                continue  # skip invalid lines (e.g., header)
+            """ accel_measurments[0].append(float(split[0]))
+            accel_measurments[1].append(float(split[1]))
+            accel_measurments[2].append(float(split[2]))"""
+            accel = [float(split[0]), float(split[1]), float(split[2])]
+            accel_measurments.append(accel)
+    
+    return np.array(accel_measurments) # shape: (N, 3)
+
+def calibrate_accelerometer():
+    accel_data = get_accel_data()  # shape: (N, 3)
+    def residuals(params):
+        # Extract bias (3), and calibration matrix (9 values)
+        b = np.array(params[0:3])
+        M = np.array(params[3:]).reshape((3, 3))
+        #print(b)
+        #print(M)
+        corrected = np.dot(accel_data - b, M.T)
+        magnitudes = np.linalg.norm(corrected, axis=1)
+        return magnitudes - 9.81  # assuming SI units
+
+    # Initial guess: zero bias, identity matrix
+    x0 = np.zeros(3 + 9)
+    x0[3] = x0[7] = x0[11] = 1.0  # diagonal of identity matrix
+    
+    result = least_squares(residuals, x0)
+
+    b_opt = result.x[0:3]
+    M_opt = result.x[3:].reshape((3, 3))
+    return b_opt, M_opt
+    
+
+
+def process_accelerometer_data():
+    raw_accel_data = get_accel_data()
+    bias,matrix = calibrate_accelerometer()
+    #raw = np.array(raw)
+    print(bias)
+    print(matrix)
+    return np.dot((raw_accel_data - bias), matrix.T)
+
+def plot_accel_data():
+    raw_accel_data = get_accel_data()
+    corrected_data = process_accelerometer_data()
+    plt.figure(figsize=(10, 5))
+    labels = ['X', 'Y', 'Z']
+    for i in range(3):
+        #plt.plot(corrected_data[i], label=f'accel corrected {labels[i]}')
+        plt.plot(raw_accel_data[i], label=f'accel raw {labels[i]}')
+        
+    plt.legend()
+    plt.title("accelscope Raw Measurements")
+    plt.xlabel("Sample")
+    plt.ylabel("Angular Velocity (dps)")
+    plt.grid(True)
+    plt.show()
+
+
+def main():
+    #plot_accel_data()
+    plot_gyro_data()
+    
+    
+main()

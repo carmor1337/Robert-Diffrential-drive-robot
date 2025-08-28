@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/DstarLite_exec.dir/src/DstarLite_main.cpp.o -o DstarLite_exec  lib/libPath_planning_lib.a ../SLAM/lib/libSLAM_lib.a /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.5.1 /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.5.1 /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.5.1 

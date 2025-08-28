@@ -1,0 +1,27 @@
+[
+{
+  "directory": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build",
+  "command": "/usr/bin/c++ -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3 -g -o CMakeFiles/DstarLite_exec.dir/src/DstarLite_main.cpp.o -c /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/src/DstarLite_main.cpp",
+  "file": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/src/DstarLite_main.cpp"
+},
+{
+  "directory": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build",
+  "command": "/usr/bin/c++ -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3 -g -o lib/CMakeFiles/Path_planning_lib.dir/Node.cpp.o -c /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/lib/Node.cpp",
+  "file": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/lib/Node.cpp"
+},
+{
+  "directory": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build",
+  "command": "/usr/bin/c++ -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3 -g -o lib/CMakeFiles/Path_planning_lib.dir/DstarLite.cpp.o -c /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/lib/DstarLite.cpp",
+  "file": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/lib/DstarLite.cpp"
+},
+{
+  "directory": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build",
+  "command": "/usr/bin/c++ -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3 -g -DGTEST_HAS_PTHREAD=1 -o tests/CMakeFiles/PathPlannerTests.dir/test_node_behaviour.cpp.o -c /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/tests/test_node_behaviour.cpp",
+  "file": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/tests/test_node_behaviour.cpp"
+},
+{
+  "directory": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build",
+  "command": "/usr/bin/c++ -I/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/Path_planning/include -isystem /usr/include/eigen3 -g -DGTEST_HAS_PTHREAD=1 -o tests/CMakeFiles/PathPlannerTests.dir/test_Dstarlite_functions.cpp.o -c /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/tests/test_Dstarlite_functions.cpp",
+  "file": "/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/Path_planning/tests/test_Dstarlite_functions.cpp"
+}
+]

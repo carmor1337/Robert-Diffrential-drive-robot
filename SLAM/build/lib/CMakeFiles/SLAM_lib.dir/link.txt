@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSLAM_lib.a CMakeFiles/SLAM_lib.dir/Odometry.cpp.o CMakeFiles/SLAM_lib.dir/TrueMap.cpp.o CMakeFiles/SLAM_lib.dir/KalmanFilter.cpp.o CMakeFiles/SLAM_lib.dir/EKF_sensor_Fusion.cpp.o CMakeFiles/SLAM_lib.dir/EKF_localization.cpp.o CMakeFiles/SLAM_lib.dir/SLAM_GUI.cpp.o CMakeFiles/SLAM_lib.dir/Robot.cpp.o
+/usr/bin/ranlib libSLAM_lib.a

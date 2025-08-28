@@ -1,0 +1,2 @@
+/usr/bin/ar qc libPath_planning_lib.a CMakeFiles/Path_planning_lib.dir/Node.cpp.o
+/usr/bin/ranlib libPath_planning_lib.a

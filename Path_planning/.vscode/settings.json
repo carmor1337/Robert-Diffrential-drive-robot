@@ -1,0 +1,7 @@
+{
+    "idf.pythonInstallPath": "/usr/bin/python3",
+    "files.associations": {
+        "chrono": "cpp",
+        "iostream": "cpp"
+    }
+}

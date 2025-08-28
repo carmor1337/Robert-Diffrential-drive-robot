@@ -1,2 +1,9 @@
+/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/CMakeFiles/DstarLite_exec.dir
 /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/CMakeFiles/edit_cache.dir
 /home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/CMakeFiles/rebuild_cache.dir
+/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/lib/CMakeFiles/Path_planning_lib.dir
+/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/lib/CMakeFiles/edit_cache.dir
+/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/lib/CMakeFiles/rebuild_cache.dir
+/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/tests/CMakeFiles/PathPlannerTests.dir
+/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/tests/CMakeFiles/edit_cache.dir
+/home/erik/Programming/Cpp_workspace/2D-Robot-Robert/build/tests/CMakeFiles/rebuild_cache.dir
