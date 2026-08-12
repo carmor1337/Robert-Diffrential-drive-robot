@@ -3,12 +3,61 @@ My personal project on a 2D robot for fun
 
 ## What
 ```mermaid
-graph TD
-    A[Start] --> B[Build]
-    B --> C[Test]
-    C --> D[Deploy]
+flowchart LR
+    subgraph Robert
+        direction LR
+
+        
+
+        subgraph MCU["Microcontroller"]
+            direction LR
+            Safety["Safety / Real-time Logic"]
+            SensorFusion["Sensor Fusion"]
+            SensorRead["Sensor Reading"]
+            MotorControl["Motor Control"]
+        end
+        
+        subgraph RPI["Raspberry Pi 5"]
+            direction TD
+            SLAM("Visual SLAM")
+            Vision["Computer Vision"]
+            Navigation["Navigation"]
+            BehaviourTree["BehaviourTree"]
+            MCUData("MCU data")
+        end
+
+        Camera --> RPI
+        TOF --> RPI
+
+        IMU["IMU"]
+        Encoder("Wheel encoders")
+
+        TOF("TOF distance measurment")
+        Camera("Camera")
+            
+        MCU <-->|"UART"| RPI
+        MCU -->|"IMU + Encoder data"| SLAM
+
+        MotorControl --> BBL298
+        BBL298 --> Motors
+    end
+    
+
+    IMU -->|"Gyro & Accel"| MCU
+    Encoder -->|"Wheel tics"| MCU
+
+    Safety --> MotorControl
+    SensorRead --> SensorFusion
+    SensorFusion -->|"(v, w) estimate"| MotorControl
+
+
+    MCUData -->|"IMU + Encoder"|SLAM
+    Navigation -->|"(v,w) command"|MotorControl
+    Vision -->|"Feature points"| SLAM -->|"Updated Map"| Navigation
+
+   
 ```
-</details
+
 ## Why 
 
 ## Hardware
