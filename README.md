@@ -73,28 +73,39 @@ TODO add links to the products
 
 
 ## Diagrams
+
 <details>
-    <summary>High level interaction</summary>
-    <p>Lorem ipsum dolor sit amet, ...</p>
+<summary>MCU Sequence</summary>
+
+```mermaid
+sequenceDiagram
+
+participant Encoders
+participant IMU
+participant MCU
+participant Motor driver
+
+    IMU -->MCU: Accelerometer and gyroscope data
+    
+    Alice->>John: Hello John, how are you?
+    John-->>Alice: Great!
+    Alice-)John: See you later!
+```
+
+Some explanatory text can go here too.
+
 </details>
 
 <details>
-    <summary>RPI 5 and MCU</summary>
-    <p>Lorem ipsum dolor sit amet, ...</p>
+<summary>Raspberry Pi 5 and MCU</summary>
+
+```mermaid
+flowchart LR
+    MCU["Microcontroller"] <-->|"UART"| RPI["Raspberry Pi 5"]
+```
+
+Some explanatory text can go here too.
+
 </details>
 
-<details>
-    <summary>MCU Intercation</summary>
-    <p>Lorem ipsum dolor sit amet, ...</p>
-</details>
-
-<details>
-    <summary>High level interaction</summary>
-    <p>```mermaid
-graph TD
-    A[Start] --> B[Build]
-    B --> C[Test]
-    C --> D[Deploy]
-```</p>
-</details>
 
