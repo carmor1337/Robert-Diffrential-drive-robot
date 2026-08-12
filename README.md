@@ -5,10 +5,14 @@ My personal project on a 2D robot for fun
 ```mermaid
 flowchart LR
     subgraph Robert
-        direction LR
+        direction TD
 
+        TOF("TOF distance measurment")
+        Camera("Camera")
+
+        IMU["IMU"]
+        Encoder("Wheel encoders")
         
-
         subgraph MCU["Microcontroller"]
             direction LR
             Safety["Safety / Real-time Logic"]
@@ -18,25 +22,17 @@ flowchart LR
         end
         
         subgraph RPI["Raspberry Pi 5"]
-            direction TD
+            direction LR
             SLAM("Visual SLAM")
             Vision["Computer Vision"]
             Navigation["Navigation"]
-            BehaviourTree["BehaviourTree"]
-            MCUData("MCU data")
         end
 
-        Camera --> RPI
+        Camera -->|"Greyscale 640x480"| RPI
         TOF --> RPI
-
-        IMU["IMU"]
-        Encoder("Wheel encoders")
-
-        TOF("TOF distance measurment")
-        Camera("Camera")
             
-        MCU <-->|"UART"| RPI
-        MCU -->|"IMU + Encoder data"| SLAM
+        MCU -->|"UART: fused IMU + encoder"| RPI
+
 
         MotorControl --> BBL298
         BBL298 --> Motors
@@ -47,12 +43,11 @@ flowchart LR
     Encoder -->|"Wheel tics"| MCU
 
     Safety --> MotorControl
-    SensorRead --> SensorFusion
+    SensorRead -->|"IMU + Encoder ticks"| SensorFusion
     SensorFusion -->|"(v, w) estimate"| MotorControl
 
 
-    MCUData -->|"IMU + Encoder"|SLAM
-    Navigation -->|"(v,w) command"|MotorControl
+    Navigation -->|"UART: (v,w) command"|MotorControl
     Vision -->|"Feature points"| SLAM -->|"Updated Map"| Navigation
 
    
