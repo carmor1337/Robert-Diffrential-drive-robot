@@ -70,42 +70,98 @@ TODO add links to the products
 
 ## Progress
 
+| Robert feature | Status |
+|------|-------------|
+| SLAM | To be implemented |
+| Path planning | Algorithm done | 
+| Path tracking| To be implemented |
+| MCU | Under construction  |
 
 
 ## Diagrams
 
+
 <details>
-<summary>MCU Sequence</summary>
+<summary>Robert overview </summary>
 
 ```mermaid
 sequenceDiagram
 
+participant User
+participant SLAM
+participant Navigation
+participant MCU
+
+User ->> Navigation: Given waypoint
+Navigation ->> SLAM: Access map
+SLAM -->> Navigation: Return map
+Navigation -->> Navigation: Convert global waypoint to robot frame
+
+    Navigation --> Navigation: Plan path
+loop Path tracking
+    Navigation ->> SLAM: Access pose
+    SLAM -->> Navigation: Return pose
+    Navigation -->> Navigation: Track path
+    Navigation ->> MCU: (v,w) command
+end
+
+```
+</details>
+
+<details>
+<summary>RPI 5 Overview</summary>
+
+
+```mermaid
+---
+title: Node
+---
+flowchart TD
+    subgraph Navigation
+        Waypoint["Waypoint request"]
+        PP["Path planning"]
+        PT["Path tracking"]
+        MCU["Mcu"]
+    end
+
+    subgraph Visual SLAM
+        Frontend["Visual frontend"]
+        Backend["Visual backend"]
+    end
+
+    Waypoint --World frame-->PP-- Path--> PT --Track path--> MCU
+    Frontend --  VIO --> Backend
+
+    Backend -- Map data-->PP
+    Backend -- Pose data-->PT
+```
+
+</details>
+
+<details>
+<summary>MCU Overview</summary>
+
+```mermaid
+sequenceDiagram
+
+participant RPI 5
 participant Encoders
 participant IMU
 participant MCU
 participant Motor driver
 
-    IMU -->MCU: Accelerometer and gyroscope data
-    
-    Alice->>John: Hello John, how are you?
-    John-->>Alice: Great!
-    Alice-)John: See you later!
+    RPI 5 ->> MCU: (v,w) command
+    IMU -->> MCU: Accel and Gyro data
+    Encoders -->> MCU: Wheel ticks
+    MCU -->> MCU: Sensor Fusion
+    MCU ->> Motor driver: PWM command
+
 ```
 
 Some explanatory text can go here too.
 
 </details>
 
-<details>
-<summary>Raspberry Pi 5 and MCU</summary>
 
-```mermaid
-flowchart LR
-    MCU["Microcontroller"] <-->|"UART"| RPI["Raspberry Pi 5"]
-```
-
-Some explanatory text can go here too.
-
-</details>
 
 
