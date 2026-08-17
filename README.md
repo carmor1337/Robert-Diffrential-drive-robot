@@ -1,5 +1,15 @@
 # 2D Robot Robert
-Robert is a 2D differential-drive robot using a Raspberry pi 5 as a main compute and a Raspberry pi Pico 2W as a low level/real-time controller.
+Robert is a 2D differential-drive robot using a Raspberry Pi 5 as a main compute and a Raspberry pi Pico 2W as a low level/real-time controller.
+
+
+- [Motivation?](#Motivation)
+- [Goals](#Goals)
+- [Why not ROS 2?](#WhynotROS2?)
+- [Hardware](#Hardware)
+- [Progress](#Progress)
+- [System Architecture](#SystemArchitecture)
+- [Software diagrams](#Softwarediagrams)
+- [MCU diagram](#MCUdiagram)
 
 
 ## Motivation 
@@ -25,7 +35,7 @@ Compute
 - **MCU:**  [Raspberry Pi Pico 2W](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
 
 Sensors
-- **Camera** [Raspberry Pi camera module 3](https://www.raspberrypi.com/products/camera-module-3/) 
+- **Camera:** [Raspberry Pi camera module 3](https://www.raspberrypi.com/products/camera-module-3/) 
 - **IMU:** [LSM6DSO](https://www.st.com/en/mems-and-sensors/lsm6dso.html)
 - **ToF:** [VL53L4CD](https://www.st.com/en/imaging-and-photonics-solutions/vl53l4cd.html)
 - **Encoder:** [Pololu magnetic encoders](https://www.pololu.com/product/4760)
@@ -47,12 +57,26 @@ Mechanical
 | Hardware | In progress |
 | MCU firmware | In progress | 
 | Sensor reading | In progress |
-| Sensor fusion | Not implemented |
+| MCU state estimation | Not implemented |
 | Motor control | In progress |
 | Path planning | Implemented |
 | Path tracking | Not implemented |
 | Visual SLAM | Not implemented |
 | Computer Vision | Not implemented |
+
+Version 1
+
+| Part  | Algorithm | Status
+|------|-------------|-------------|
+| Path planning | A*/D*lite | Implemented
+| Path tracking | Pure Pursuit |
+| Velocity control | Cascading PIDS |
+| MCU comms | UART |
+| Feature extractor | ORB |
+| Backend | Non-linear estimation |
+| Loop closure | Not used |
+| VSLAM | VINS |
+
 
 For more information regarding the MCU/low level side of this project visit the link below:
 
@@ -116,7 +140,7 @@ The high-level navigation stack commands the robot using linear velocity v and a
 The IMU and wheel encoders are connected directly to the MCU because they are used for real-time state estimation and control. The ToF sensor is connected to the Pi because it is primarily used for obstacle detection/navigation and solving the absolute distance problem of monocular vision and does not require the same timing guarantees.
 
 
-## Software diagram
+## Software diagrams
 
 
 <details>
@@ -187,16 +211,21 @@ flowchart TD
 sequenceDiagram
 
 participant RPI 5
-participant Encoders
 participant IMU
+participant Encoders
 participant MCU
 participant Motor driver
+participant Motor
 
     RPI 5 ->> MCU: (v,w) command
-    IMU -->> MCU: Accel and Gyro data
-    Encoders -->> MCU: Wheel ticks
-    MCU -->> MCU: Sensor Fusion
-    MCU ->> Motor driver: PWM command
+    loop Periodic 200 HZ
+        IMU -->> MCU: Accel and Gyro data
+        Encoders -->> MCU: Wheel ticks
+        MCU -->> MCU: State estimation
+        MCU -->> MCU: Velocity control
+        MCU ->> Motor driver: PWM command
+        Motor ->> Encoders: Wheel ticks
+    end
 
 ```
 
