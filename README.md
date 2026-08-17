@@ -1,26 +1,25 @@
-# 2D Robot Robert
-Robert is a 2D differential-drive robot using a Raspberry Pi 5 as a main compute and a Raspberry pi Pico 2W as a low level/real-time controller.
+# Robert - Differential drive robot  
+Robert is a 2D differential-drive robot built around a Raspberry Pi 5 and Raspberry Pi Pico 2 W. The Pi 5 handles high-level perception, localization, and navigation, while the Pico 2 W handles low-level real-time control and safety.
 
-
-- [Motivation?](#Motivation)
-- [Goals](#Goals)
-- [Why not ROS 2?](#Why-not-ROS-2?)
-- [Hardware](#Hardware)
-- [Progress](#Progress)
-- [System Architecture](#System-Architecture)
-- [Software diagrams](#Software-diagrams)
-- [MCU diagram](#MCU-diagram)
+- [Motivation](#motivation)
+- [Goals](#goals)
+- [Why not ROS 2?](#why-not-ros-2)
+- [Hardware](#hardware)
+- [Progress](#progress)
+- [System Architecture](#system-architecture)
+- [Software diagrams](#software-diagrams)
+- [MCU diagram](#mcu-diagram)
 
 
 ## Motivation 
 I started this project after having participated in the course [DD2419](https://www.kth.se/student/kurser/kurs/DD2419?l=en) at KTH and had a lot of fun so I wanted to make my own and do it all myself. In the future I would like to move to more advanced robotics platforms. 
 
 ## Goals
-The goal of Robert is not only to build a working robot, but to implement the major robotics components myself and use the project to explore:
+The goal of Robert is not only to build a working robot, but also to implement the major robotics components myself and use the project to explore:
 
 - Embedded systems
 - Real-time control
-- State estimation and sensor fusion
+- State estimation
 - Computer vision
 - Visual-inertial SLAM
 - Path planning and tracking
@@ -30,52 +29,44 @@ The goal of Robert is not only to build a working robot, but to implement the ma
 Robert is intentionally being developed without relying on ROS 2 implementations of the core robotics algorithms. The goal is to implement the underlying systems myself rather than primarily integrating existing robotics frameworks. ROS 2 will be used as a communication and integration layer between modules, while keeping the individual components as independent as possible.
 
 ## Hardware
-Compute
+### Compute
 - **Main compute:** [ Raspberry Pi 5 16GB](https://www.raspberrypi.com/products/raspberry-pi-5/)
-- **MCU:**  [Raspberry Pi Pico 2W](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
+- **MCU:**  [Raspberry Pi Pico 2 W](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
 
-Sensors
+### Sensors
 - **Camera:** [Raspberry Pi camera module 3](https://www.raspberrypi.com/products/camera-module-3/) 
 - **IMU:** [LSM6DSO](https://www.st.com/en/mems-and-sensors/lsm6dso.html)
 - **ToF:** [VL53L4CD](https://www.st.com/en/imaging-and-photonics-solutions/vl53l4cd.html)
 - **Encoder:** [Pololu magnetic encoders](https://www.pololu.com/product/4760)
 
-Actuation
+### Actuation
 - **Motor driver:** [BBL298](https://www.olimex.com/Products/Robot-CNC-Parts/MotorDrivers/BB-L298/open-source-hardware)
-- **Motor:**  [2× [Micro Metal Gearmotor 75:1, 6 V, 1.5 A stall current (\#3064)]](https://www.pololu.com/product/3064)
+- **Motors:**  [2× Micro Metal Gearmotor 75:1, 6 V, 1.5 A stall current (#3064)](https://www.pololu.com/product/3064)
 
-Mechanical
-- **Wheels:** [Pololu 80mm diameter](https://www.pololu.com/product/1431)
-- **Chassis** 2× [Olimex plates stacked](https://www.olimex.com/Products/Robot-CNC-Parts/Chassis/ROBOT-CHASSIS-3/)
+### Mechanical
+- **Wheels:** [Pololu 80 mm diameter](https://www.pololu.com/product/1431)
+- **Chassis** [2× Olimex plates stacked](https://www.olimex.com/Products/Robot-CNC-Parts/Chassis/ROBOT-CHASSIS-3/)
 
 
 
 ## Progress
 
-| Component | Status |
-|------|-------------|
-| Hardware | In progress |
-| MCU firmware | In progress | 
-| Sensor reading | In progress |
-| MCU state estimation | Not implemented |
-| Motor control | In progress |
-| Path planning | Implemented |
-| Path tracking | Not implemented |
-| Visual SLAM | Not implemented |
-| Computer Vision | Not implemented |
 
-Version 1
+### V1 algorithm stack
+
+**Current status:** The hardware and low-level control stack are under development. Path planning and computer vision components are implemented, while state estimation, path tracking, and visual-inertial SLAM are still in development.
 
 | Part  | Algorithm | Status
 |------|-------------|-------------|
-| Path planning | A*/D*lite | Implemented
+| Path planning | A* / D* Lite | Implemented
 | Path tracking | Pure Pursuit | Not implemented
-| Velocity control | Cascading PIDS | In progress
-| MCU comms | UART | Not implemented
+| Velocity control | Cascaded PID controllers | In progress
+| Pi–MCU communication | UART | Not implemented
 | Feature extractor | ORB | Implemented
-| Backend | Non-linear estimation | In progress
-| Loop closure | Not used | -
-| VSLAM | VINS | In progress
+| Visual odometry | TBD | Not implemented
+| Backend | EKF | In progress
+| Loop closure | Planned | -
+| Visual-inertial SLAM | Custom implementation | In progress
 
 
 For more information regarding the MCU/low level side of this project visit the link below:
@@ -106,15 +97,16 @@ flowchart LR
         
         subgraph RPI["Raspberry Pi 5"]
             direction LR
-            SLAM("Visual SLAM")
+            Frontend("VSLAM Frontend")
+            Backend("VSLAM Backend")
             Vision["Computer Vision"]
             Navigation["Navigation"]
         end
 
-        Camera -->|"Greyscale 640x480"| RPI
-        ToF --> RPI
+        Camera -->|"Greyscale 640x480"| Vision
+        ToF --> Frontend
             
-        MCU -->|"UART: fused IMU + encoder"| RPI
+        MCU -->|"UART: IMU + Encoder ticks"| Frontend
 
 
         MotorControl --> MotorDriver
@@ -122,23 +114,22 @@ flowchart LR
     end
     
 
-    IMU -->|"Gyro & Accel"| MCU
-    Encoder -->|"Wheel ticks"| MCU
+    IMU -->|"Gyro & Accel"| SensorRead
+    Encoder -->|"Wheel ticks"| SensorRead
 
     Safety --> MotorControl
     SensorRead -->|"IMU + Encoder ticks"| SensorFusion
     SensorFusion -->|"(v, w) estimate"| MotorControl
 
 
-    Navigation -->|"UART: (v,w) command (Linear,angular)velocity "|MotorControl
-    Vision -->|"Feature points"| SLAM -->|"Updated Map"| Navigation
-
+    Navigation -->|"UART: (v,w) command (Linear,angular)velocity "| MotorControl
+    Vision -->|"Feature points"| Frontend -->|"Visual Odometry"| Backend -->|"Updated Map"| Navigation
+    Backend -->|"Updated Pose"| Navigation
    
 ```
 The high-level navigation stack commands the robot using linear velocity v and angular velocity ω. The MCU converts these commands into individual wheel velocity targets and ultimately motor PWM commands.
 
-The IMU and wheel encoders are connected directly to the MCU because they are used for real-time state estimation and control. The ToF sensor is connected to the Pi because it is primarily used for obstacle detection/navigation and solving the absolute distance problem of monocular vision and does not require the same timing guarantees.
-
+The ToF sensor is connected to the Pi because it is primarily used for obstacle detection and navigation, providing metric depth information that is difficult to obtain from monocular vision alone and does not require the same timing guarantees.
 
 ## Software diagrams
 
@@ -149,23 +140,23 @@ The IMU and wheel encoders are connected directly to the MCU because they are us
 
 ```mermaid
 sequenceDiagram
-
 participant User
 participant SLAM
 participant Navigation
 participant MCU
 
-User ->> Navigation: Given waypoint
-Navigation ->> SLAM: Access map
-SLAM -->> Navigation: Return map
-Navigation -->> Navigation: Convert global waypoint to robot frame
+User ->> Navigation: Set waypoint
 
-    Navigation --> Navigation: Plan path
-loop Path tracking
-    Navigation ->> SLAM: Access pose
-    SLAM -->> Navigation: Return pose
-    Navigation -->> Navigation: Track path
-    Navigation ->> MCU: (v,w) command
+loop For each new waypoint
+    SLAM -->> Navigation: Publish map
+    Navigation -->> Navigation: Transform waypoint to robot frame
+    Navigation -->> Navigation: Plan path
+
+    loop Path tracking
+        SLAM -->> Navigation: Publish pose
+        Navigation -->> Navigation: Track path
+        Navigation ->> MCU: (v, ω) command
+    end
 end
 
 ```
@@ -188,12 +179,12 @@ flowchart TD
     end
 
     subgraph Visual SLAM
-        Frontend["Visual frontend"]
-        Backend["Visual backend"]
+        Frontend["Frontend"]
+        Backend["Backend"]
     end
 
     Waypoint --World frame-->PP-- Path--> PT --Track path--> MCU
-    Frontend --  VIO --> Backend
+    Frontend --  Visual odometry --> Backend
 
     Backend -- Map data-->PP
     Backend -- Pose data-->PT
@@ -217,9 +208,9 @@ participant MCU
 participant Motor driver
 participant Motor
 
-    RPI 5 ->> MCU: (v,w) command
-    loop Periodic 200 HZ
-        IMU -->> MCU: Accel and Gyro data
+    RPI 5 ->> MCU: (v, w) 
+    loop 200 Hz control loop
+        IMU -->> MCU: Accel + Gyro 
         Encoders -->> MCU: Wheel ticks
         MCU -->> MCU: State estimation
         MCU -->> MCU: Velocity control
