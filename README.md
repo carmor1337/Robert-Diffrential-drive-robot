@@ -1,13 +1,14 @@
 # 2D Robot Robert
-My personal project on a 2D robot for fun
+Robert is a 2D differential-drive robot using a Raspberry pi 5 as a main compute and a Raspberry pi Pico 2W as a low level/real-time controller.
 
-## What
+
+## System Architecture
 ```mermaid
 flowchart LR
     subgraph Robert
         direction TD
 
-        TOF("TOF distance measurment")
+        ToF("ToF distance measurement")
         Camera("Camera")
 
         IMU["IMU"]
@@ -29,7 +30,7 @@ flowchart LR
         end
 
         Camera -->|"Greyscale 640x480"| RPI
-        TOF --> RPI
+        ToF --> RPI
             
         MCU -->|"UART: fused IMU + encoder"| RPI
 
@@ -40,7 +41,7 @@ flowchart LR
     
 
     IMU -->|"Gyro & Accel"| MCU
-    Encoder -->|"Wheel tics"| MCU
+    Encoder -->|"Wheel ticks"| MCU
 
     Safety --> MotorControl
     SensorRead -->|"IMU + Encoder ticks"| SensorFusion
@@ -53,35 +54,87 @@ flowchart LR
    
 ```
 
-## Why 
+## Motivation 
+I started this project after having participated in the course [DD2419](https://www.kth.se/student/kurser/kurs/DD2419?l=en) at KTH and had a lot of fun so I wanted to make my own and do it all myself. In the future I would like to move to more advanced robotics platforms. 
+
+## Goals
+The goal of Robert is not only to build a working robot, but to implement the major robotics components myself and use the project to explore:
+
+-Embedded systems
+-Real-time control
+-State estimation and sensor fusion
+-Computer vision
+-Visual-inertial SLAM
+-Path planning and tracking
+-Robot kinematics and dynamics
+
+# Relationship with ROS 2
+Robert is intentionally being developed without ROS for the core robotics stack. The goal of the project is to understand and implement the underlying systems myself rather than primarily integrating existing robotics frameworks. ROS will be used for intra-robot modules and communication but I will try to modulazie it as much as possible to make ROS as a communications layer.
 
 ## Hardware
-TODO add links to the products
+Compute
 - **Main compute:** [ Raspberry Pi 5 16GB](https://www.raspberrypi.com/products/raspberry-pi-5/)
-- **Camera** [Raspberry Pi camera module 3](https://www.raspberrypi.com/products/camera-module-3/) 
 - **MCU:**  [Raspberry Pi Pico 2W](https://www.raspberrypi.com/products/raspberry-pi-pico-2/)
+
+Sensors
+- **Camera** [Raspberry Pi camera module 3](https://www.raspberrypi.com/products/camera-module-3/) 
 - **IMU:** [LSM6DSO](https://www.st.com/en/mems-and-sensors/lsm6dso.html)
-- **TOF:** [VL53L4CD](https://www.st.com/en/imaging-and-photonics-solutions/vl53l4cd.html)
-- **Encoder:** [Pololu magnetic encoders]()
+- **ToF:** [VL53L4CD](https://www.st.com/en/imaging-and-photonics-solutions/vl53l4cd.html)
+- **Encoder:** [Pololu magnetic encoders](https://www.pololu.com/product/4760)
+
+Actuation
 - **Motor driver:** [BBL298](https://www.olimex.com/Products/Robot-CNC-Parts/MotorDrivers/BB-L298/open-source-hardware)
-- **Motor:**  [2 Micro motors 75:1, 6V, 1.5A stall current, \#3064](https://www.pololu.com/product/3064)
+- **Motor:**  [2 micro motors 75:1, 6V, 1.5A stall current, \#3064](https://www.pololu.com/product/3064)
+- 
+Mechanical
 - **Wheels:** [Pololu 80mm diameter](https://www.pololu.com/product/1431)
-- **Chassi** 2 [Olimex plates stacked](https://www.olimex.com/Products/Robot-CNC-Parts/Chassis/ROBOT-3-WHEEL-KIT/)
+- **Chassis** 2 [Olimex plates stacked](https://www.olimex.com/Products/Robot-CNC-Parts/Chassiss/ROBOT-3-WHEEL-KIT/)
+
+
+
 
 ## Progress
 
-| Robert feature | Status |
+| Component | Status |
 |------|-------------|
-| SLAM | To be implemented |
-| Path planning | Algorithm done | 
-| Path tracking| To be implemented |
-| MCU | Under construction  |
+| Hardware | In progress |
+| MCU firmware | In progress | 
+| Sensor reading | In progress |
+| Sensor fusion | Not implemented |
+| Motor control | In progress |
+| Path planning | Implemented |
+| Path tracking | Not implemented |
+| Visual SLAM | Not implemented |
+| Computer Vision | Not implemented |
+
+<details>
+<summary> MCU Tasks and progress </summary>
+
+| Motor control | Status |
+|------|-------------|
+| Hardware | In progress |
 
 
-## Diagrams
+| Sensor fusion | Status |
+|------|-------------|
+| Hardware | In progress |
+
+| Drivers | Status |
+|------|-------------|
+| Hardware | In progress |
+
+| RPI 5 comms | Status |
+|------|-------------|
+| Hardware | In progress |
+
+</details>
+
+
+## Software diagram
 
 
 <details>
+    
 <summary>Robert overview </summary>
 
 ```mermaid
@@ -121,7 +174,7 @@ flowchart TD
         Waypoint["Waypoint request"]
         PP["Path planning"]
         PT["Path tracking"]
-        MCU["Mcu"]
+        MCU["MCU"]
     end
 
     subgraph Visual SLAM
@@ -134,9 +187,12 @@ flowchart TD
 
     Backend -- Map data-->PP
     Backend -- Pose data-->PT
-```
 
+```
 </details>
+
+
+## MCU diagram
 
 <details>
 <summary>MCU Overview</summary>
@@ -158,7 +214,6 @@ participant Motor driver
 
 ```
 
-Some explanatory text can go here too.
 
 </details>
 
