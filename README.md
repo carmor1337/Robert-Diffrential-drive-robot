@@ -8,16 +8,16 @@ I started this project after having participated in the course [DD2419](https://
 ## Goals
 The goal of Robert is not only to build a working robot, but to implement the major robotics components myself and use the project to explore:
 
--Embedded systems
--Real-time control
--State estimation and sensor fusion
--Computer vision
--Visual-inertial SLAM
--Path planning and tracking
--Robot kinematics and dynamics
+- Embedded systems
+- Real-time control
+- State estimation and sensor fusion
+- Computer vision
+- Visual-inertial SLAM
+- Path planning and tracking
+- Robot kinematics and dynamics
 
-# Relationship with ROS 2
-Robert is intentionally being developed without ROS for the core robotics stack. The goal of the project is to understand and implement the underlying systems myself rather than primarily integrating existing robotics frameworks. ROS will be used for intra-robot modules and communication but I will try to modulazie it as much as possible to make ROS as a communications layer.
+# Why not ROS 2?
+Robert is intentionally being developed without relying on ROS 2 implementations of the core robotics algorithms. The goal is to implement the underlying systems myself rather than primarily integrating existing robotics frameworks. ROS 2 will be used as a communication and integration layer between modules, while keeping the individual components as independent as possible.
 
 ## Hardware
 Compute
@@ -32,11 +32,11 @@ Sensors
 
 Actuation
 - **Motor driver:** [BBL298](https://www.olimex.com/Products/Robot-CNC-Parts/MotorDrivers/BB-L298/open-source-hardware)
-- **Motor:**  [2 micro motors 75:1, 6V, 1.5A stall current, \#3064](https://www.pololu.com/product/3064)
-- 
+- **Motor:**  [2× [Micro Metal Gearmotor 75:1, 6 V, 1.5 A stall current (\#3064)]](https://www.pololu.com/product/3064)
+
 Mechanical
 - **Wheels:** [Pololu 80mm diameter](https://www.pololu.com/product/1431)
-- **Chassis** 2 [Olimex plates stacked](https://www.olimex.com/Products/Robot-CNC-Parts/Chassiss/ROBOT-3-WHEEL-KIT/)
+- **Chassis** 2× [Olimex plates stacked](https://www.olimex.com/Products/Robot-CNC-Parts/Chassis/ROBOT-CHASSIS-3/)
 
 
 
@@ -74,9 +74,10 @@ flowchart LR
         subgraph MCU["Microcontroller"]
             direction LR
             Safety["Safety / Real-time Logic"]
-            SensorFusion["Sensor Fusion"]
+            SensorFusion["State estimation"]
             SensorRead["Sensor Reading"]
             MotorControl["Motor Control"]
+            MotorDriver["Motor Driver"]
         end
         
         subgraph RPI["Raspberry Pi 5"]
@@ -92,8 +93,8 @@ flowchart LR
         MCU -->|"UART: fused IMU + encoder"| RPI
 
 
-        MotorControl --> BBL298
-        BBL298 --> Motors
+        MotorControl --> MotorDriver
+        MotorDriver --> Motors
     end
     
 
@@ -105,11 +106,14 @@ flowchart LR
     SensorFusion -->|"(v, w) estimate"| MotorControl
 
 
-    Navigation -->|"UART: (v,w) command"|MotorControl
+    Navigation -->|"UART: (v,w) command (Linear,angular)velocity "|MotorControl
     Vision -->|"Feature points"| SLAM -->|"Updated Map"| Navigation
 
    
 ```
+The high-level navigation stack commands the robot using linear velocity v and angular velocity ω. The MCU converts these commands into individual wheel velocity targets and ultimately motor PWM commands.
+
+The IMU and wheel encoders are connected directly to the MCU because they are used for real-time state estimation and control. The ToF sensor is connected to the Pi because it is primarily used for obstacle detection/navigation and solving the absolute distance problem of monocular vision and does not require the same timing guarantees.
 
 
 ## Software diagram
