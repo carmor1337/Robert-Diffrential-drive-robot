@@ -4,12 +4,12 @@ Robert is a 2D differential-drive robot using a Raspberry Pi 5 as a main compute
 
 - [Motivation?](#Motivation)
 - [Goals](#Goals)
-- [Why not ROS 2?](#WhynotROS2?)
+- [Why not ROS 2?](#Why-not-ROS-2?)
 - [Hardware](#Hardware)
 - [Progress](#Progress)
-- [System Architecture](#SystemArchitecture)
-- [Software diagrams](#Softwarediagrams)
-- [MCU diagram](#MCUdiagram)
+- [System Architecture](#System-Architecture)
+- [Software diagrams](#Software-diagrams)
+- [MCU diagram](#MCU-diagram)
 
 
 ## Motivation 
@@ -69,13 +69,13 @@ Version 1
 | Part  | Algorithm | Status
 |------|-------------|-------------|
 | Path planning | A*/D*lite | Implemented
-| Path tracking | Pure Pursuit |
-| Velocity control | Cascading PIDS |
-| MCU comms | UART |
-| Feature extractor | ORB |
-| Backend | Non-linear estimation |
-| Loop closure | Not used |
-| VSLAM | VINS |
+| Path tracking | Pure Pursuit | Not implemented
+| Velocity control | Cascading PIDS | In progress
+| MCU comms | UART | Not implemented
+| Feature extractor | ORB | Implemented
+| Backend | Non-linear estimation | In progress
+| Loop closure | Not used | -
+| VSLAM | VINS | In progress
 
 
 For more information regarding the MCU/low level side of this project visit the link below:
